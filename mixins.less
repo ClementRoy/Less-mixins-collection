@@ -22,6 +22,12 @@
 	box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
 }
 
+.inner-box-shadow (@x:0, @y:1px, @blur:2px, @alpha: 0.4) {
+  -webkit-box-shadow: inset @x @y @blur rgba(0, 0, 0, @alpha);
+  -moz-box-shadow: inset @x @y @blur rgba(0, 0, 0, @alpha);
+  box-shadow: inset @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
 
 .transition (@prop: all, @time: 1s, @ease: linear) {
 	-webkit-transition: @prop @time @ease;
@@ -49,6 +55,227 @@
 	background-image: -ms-linear-gradient(@origin, @start, @stop);
 	background-image: linear-gradient(@origin, @start, @stop);
 }
+
+
+
+/* NOTE: it is really useful ? */
+.quick-gradient (@origin: left, @alpha: 0.2) {
+	background-image: -webkit-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+	background-image: -moz-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+	background-image: -o-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+	background-image: -ms-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+	background-image: linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+}
+
+
+/* TODO: use CSS shorthand */
+.bordered (@top-color: #EEE, @right-color: #EEE, @bottom-color: #EEE, @left-color: #EEE) {
+  border-top: solid 1px @top-color;
+  border-left: solid 1px @left-color;
+  border-right: solid 1px @right-color;
+  border-bottom: solid 1px @bottom-color;
+}
+
+.opacity (@opacity: 0.5) {
+  -moz-opacity: @opacity;
+  -khtml-opacity: @opacity;
+  -webkit-opacity: @opacity;
+  opacity: @opacity;
+}
+
+
+.clip {
+	-webkit-background-clip: padding-box; 
+	-moz-background-clip: padding; 
+	-o-background-clip: padding; 
+	background-clip: padding-box; 
+}
+
+.box-sizing (@sizing: border-box){
+	-webkit-box-sizing: @sizing;
+	-moz-box-sizing: @sizing;
+	box-sizing: @sizing;
+}
+
+.bgsize (@size: 100% 100%){
+	-webkit-background-size: @size; 
+	-moz-background-size: @size;
+	-o-background-size: @size;
+	background-size: @size;
+}
+
+.scale (@scale: 1.5, @x: 0, @y: 0){
+	-webkit-transform: scale(@scale);
+	-webkit-transform-origin: @x @y;
+	-moz-transform: scale(@scale);
+	-moz-transform-origin: @x @y;
+	-o-transform: scale(@scale);
+	-o-transform-origin: @x @y;
+	-ms-transform: scale(@scale);
+	-ms-transform-origin: @x @y;
+	transform: scale(@scale);
+	transform-origin: @x @y;
+}
+
+
+.rotate (@deg: rotate(9deg)){	
+	-webkit-transform: @deg;
+	-moz-transform: @deg;
+	-ms-transform: @deg;
+	-o-transform: @deg;
+	transform: @deg;
+}
+
+// Example: html {.seo-helper}
+.seo-helper () {
+	img:not([alt]), img[alt=""], img[alt^=" "],
+	a[href=""], a[href^=" "], a[href="#"], a[rel*="nofollow"],
+	div:empty, span:empty, li:empty, p:empty, td:empty, th:empty,
+	*[title=""], *[class=""], *[id=""] {
+		outline: 2px solid red !important;
+		outline-offset: 3px !important;
+		}
+	head, title:empty, link, meta {display: block;}
+	title:empty:before {content: "You've left the <title> empty!"}
+	link:before {content: "You don't have a <title>!"}
+	title ~ link {display: none;}
+	meta[name="description"][content=""]:before, meta[name="description"][content=" "]:before {content: "You've left description empty!";}
+	}
+
+/*
+Ressources:
+
+http://lesscss.org/
+http://designshack.net/articles/css/10-less-css-examples-you-should-steal-for-your-projects/
+http://lesselements.com/
+https://github.com/tophermade/LESS-Mixins/blob/master/mixins.less
+https://github.com/markdotto/Preboot.less
+
+*/
+
+
+
+/* NOT USED YET */
+/* Color complement */
+/*
+@base: #663333;
+@complement1: spin(@base, 180);
+@complement2: darken(spin(@base, 180), 5%);
+@lighten1: lighten(@base, 15%);
+@lighten2: lighten(@base, 30%);
+*/
+
+/* Color variation */
+/*
+@base: #663333;
+@lighter1: lighten(spin(@base, 5), 10%);
+@lighter2: lighten(spin(@base, 10), 20%);
+@darker1: darken(spin(@base, -5), 10%);
+@darker2: darken(spin(@base, -10), 20%);
+
+
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
+  background: @color;
+  background: -webkit-gradient(linear,
+                               left bottom,
+                               left top,
+                               color-stop(0, @start),
+                               color-stop(1, @stop));
+  background: -ms-linear-gradient(bottom,
+                                  @start,
+                                  @stop);
+  background: -moz-linear-gradient(center bottom,
+                                   @start 0%,
+                                   @stop 100%);
+}
+
+.gradient(@start: #eee, @end: #777) {	
+	background: @start;
+	background-image: -moz-linear-gradient(top, @start, @end); 
+	background-image: -ms-linear-gradient(top, @start, @end); 
+	background-image: -o-linear-gradient(top, @start, @end);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(@start), to(@end));
+	background-image: -webkit-linear-gradient(top, @start, @end);
+	background-image: linear-gradient(top, @start, @end);
+}
+
+.gradient-circle(@h: center, @v: center, @shape: circle, @size: contain, @start: #ddd, @finish: #333, @stop: 100%) {
+	background-color: @start;
+	background-image: -moz-radial-gradient(@h @v, @shape @size, @start, @end @stop);
+	background-image: -webkit-radial-gradient(@h @v, @shape @size, @start, @end @stop);
+	background-image: -o-radial-gradient(@h @v, @shape @size, @start, @end @stop);
+	background-image: -ms-radial-gradient(@h @v, @shape @size, @start, @end @stop);
+	background-image: radial-gradient(@h @v, @shape @size, @start, @end @stop);
+}
+
+
+.drop-shadow (@x-axis: 0, @y-axis: 1px, @blur: 2px, @alpha: 0.1) {
+  -webkit-box-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
+  -moz-box-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
+  box-shadow: @x-axis @y-axis @blur rgba(0, 0, 0, @alpha);
+}
+
+.box-shadow(@arguments) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+
+.columns(@colwidth: 250px, @colcount: 0, @colgap: 50px, @columnRuleColor: #EEE, @columnRuleStyle: solid, @columnRuleWidth: 1px) {
+  -moz-column-width: @colwidth;
+  -moz-column-count: @colcount;
+  -moz-column-gap: @colgap;
+  -moz-column-rule-color: @columnRuleColor;
+  -moz-column-rule-style: @columnRuleStyle;
+  -moz-column-rule-width: @columnRuleWidth;
+  -webkit-column-width: @colwidth;
+  -webkit-column-count: @colcount;
+  -webkit-column-gap: @colgap;
+  -webkit-column-rule-color: @columnRuleColor;
+  -webkit-column-rule-style: @columnRuleStyle;
+  -webkit-column-rule-width: @columnRuleWidth;
+  column-width: @colwidth;
+  column-count: @colcount;
+  column-gap: @colgap;
+  column-rule-color: @columnRuleColor;
+  column-rule-style: @columnRuleStyle;
+  column-rule-width: @columnRuleWidth;
+}
+.translate(@x:0, @y:0) {
+  -moz-transform: translate(@x, @y);
+  -webkit-transform: translate(@x, @y);
+  -o-transform: translate(@x, @y);
+  -ms-transform: translate(@x, @y);
+  transform: translate(@x, @y);
+}
+
+.true(@height: 20px){
+	height: @height;
+	line-height: @height;
+}
+
+.indent(@indent: -9999em){
+	text-indent: @indent;
+}
+
+.size(@width: 20px, @height: 20px){
+	width: @width;
+	height: @height;
+}
+
+// for use on :after
+.clear{
+	content: " "; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;	
+}
+
+*/
+
+
 
 
 
